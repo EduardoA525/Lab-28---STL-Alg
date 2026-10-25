@@ -28,6 +28,7 @@ void totalAgeAlg(list<Goat> trip);
 void boolAgeCheckAlg(list<Goat> trip);
 void reverseGoatAlg(list<Goat> &trip);
 void removeAgeCheckAlg(list<Goat> &trip);
+void removeDupesAlg(list<Goat> &trip);
 
 int main() {
     srand(time(0));
@@ -60,7 +61,7 @@ int main() {
     
     // Goat Manager 3001 Engine
     int sel = main_menu();
-    while (sel != 11) {
+    while (sel != 12) {
         switch (sel) {
             case 1:
                 cout << "Adding a goat.\n";
@@ -95,6 +96,9 @@ int main() {
             case 10:    
                 removeAgeCheckAlg(trip);
                 break;
+            case 11:    
+                removeDupesAlg(trip);
+                break;
             default:
                 cout << "Invalid selection.\n";
                 break;
@@ -102,7 +106,6 @@ int main() {
         sel = main_menu();
     }
     
-
     return 0;
 }
 
@@ -118,11 +121,12 @@ int main_menu() {
     cout << "[8] Alg. Bool Age Checker\n";
     cout << "[9] Alg. Reverse Goat List\n";
     cout << "[10] Alg. Older Age Remover\n";
-    cout << "[] Quit\n";
+    cout << "[11] Alg. Goat Clone Remover\n";
+    cout << "[12] Quit\n";
     cout << "Choice --> ";
     int choice;
     cin >> choice;
-    while (choice < 1 || choice > 11) {
+    while (choice < 1 || choice > 12) {
         cout << "Invalid, again --> ";
         cin >> choice;
     }
@@ -276,4 +280,24 @@ void removeAgeCheckAlg(list<Goat> &trip){
         cout <<  "is " << trip.size() << " goat left." << endl;
     }
     else cout << "are " << trip.size() << " goats left." << endl;
+}
+
+void removeDupesAlg(list<Goat> &trip){
+    int newSize;
+    trip.sort();
+
+    size_t prevSize = trip.size();
+
+    trip.unique([](const Goat &first, const Goat &second){
+        return first.get_name() == second.get_name();
+    });
+
+    newSize = prevSize - trip.size();
+
+    cout << "\nGoat duplicates have been eradicated.." << endl;
+    cout << "Evil goat clones eradicated: " << newSize << endl;
+
+    cout << "Real unique goats left: " << trip.size() << endl;
+
+    display_trip(trip);
 }
