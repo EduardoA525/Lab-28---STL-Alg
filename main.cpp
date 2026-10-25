@@ -22,6 +22,7 @@ int main_menu();
 //Algorithm functions
 void displayGoatsAlg(list<Goat> trip);
 void findGoatAlg(list<Goat> trip);
+void countGoatAlg(list<Goat> trip);
 
 int main() {
     srand(time(0));
@@ -54,7 +55,7 @@ int main() {
     
     // Goat Manager 3001 Engine
     int sel = main_menu();
-    while (sel != 6) {
+    while (sel != 7) {
         switch (sel) {
             case 1:
                 cout << "Adding a goat.\n";
@@ -74,6 +75,9 @@ int main() {
             case 5:    
                 findGoatAlg(trip);
                 break;
+            case 6:    
+                countGoatAlg(trip);
+                break;
             default:
                 cout << "Invalid selection.\n";
                 break;
@@ -92,11 +96,12 @@ int main_menu() {
     cout << "[3] List goats\n";
     cout << "[4] Alg. Display Goats\n";
     cout << "[5] Alg. Find Goat\n";
+    cout << "[6] Alg. Count Goat\n";
     cout << "[] Quit\n";
     cout << "Choice --> ";
     int choice;
     cin >> choice;
-    while (choice < 1 || choice > 6) {
+    while (choice < 1 || choice > 7) {
         cout << "Invalid, again --> ";
         cin >> choice;
     }
@@ -173,5 +178,24 @@ void findGoatAlg(list<Goat> trip){
     else {
         cout << "\nGoat does not exist.\n";
     }
+}
+
+void countGoatAlg(list<Goat> trip){
+    int age;
+
+    cout << "\nWhat age to check for: ";
+    cin >> age;
+
+    int count = count_if(trip.begin(), trip.end(), [age](const Goat &gt){
+                        return gt.get_age() == age;
+    });
+
+    cout << "Goats with the age " << age << ": " << count;
+    if (count == 1) {
+        cout << " goat." << endl;
+    }
+    else
+        cout << " goats." << endl;
+
 }
 
