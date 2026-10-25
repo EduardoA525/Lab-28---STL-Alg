@@ -12,7 +12,7 @@
 #include "Goat.h"
 using namespace std;
 
-const int SZ_NAMES = 200, SZ_COLORS = 25, TOTAL_START = 0;
+const int SZ_NAMES = 200, SZ_COLORS = 25, TOTAL_START = 0, MIN_AGE = 6;
 
 int select_goat(list<Goat> trip);
 void delete_goat(list<Goat> &trip);
@@ -25,6 +25,7 @@ void displayGoatsAlg(list<Goat> trip);
 void findGoatAlg(list<Goat> trip);
 void countGoatAlg(list<Goat> trip);
 void totalAgeAlg(list<Goat> trip);
+void boolAgeCheckAlg(list<Goat> trip);
 
 int main() {
     srand(time(0));
@@ -57,7 +58,7 @@ int main() {
     
     // Goat Manager 3001 Engine
     int sel = main_menu();
-    while (sel != 8) {
+    while (sel != 9) {
         switch (sel) {
             case 1:
                 cout << "Adding a goat.\n";
@@ -83,6 +84,9 @@ int main() {
             case 7:    
                 totalAgeAlg(trip);
                 break;
+            case 8:    
+                boolAgeCheckAlg(trip);
+                break;
             default:
                 cout << "Invalid selection.\n";
                 break;
@@ -103,11 +107,12 @@ int main_menu() {
     cout << "[5] Alg. Find Goat\n";
     cout << "[6] Alg. Count Goat\n";
     cout << "[7] Alg. Accumulate Ages\n";
+    cout << "[8] Alg. Bool Age Checker\n";
     cout << "[] Quit\n";
     cout << "Choice --> ";
     int choice;
     cin >> choice;
-    while (choice < 1 || choice > 8) {
+    while (choice < 1 || choice > 9) {
         cout << "Invalid, again --> ";
         cin >> choice;
     }
@@ -214,3 +219,15 @@ void totalAgeAlg(list<Goat> trip){
     cout << "\nAccumulated age of every goat: " << totalAge << endl;
 }
 
+void boolAgeCheckAlg(list<Goat> trip){
+    bool confirmed = any_of(trip.begin(), trip.end(), [](const Goat &gt){
+                        return gt.get_age() >= MIN_AGE;
+                    });
+
+    if (confirmed) {
+        cout << "\nYES! Minimum of one goat is " << MIN_AGE << " years old or older.\n";
+    }
+    else {
+        cout << "\nNO! No goats are at least " << MIN_AGE << " years old.\n";
+    }
+}
