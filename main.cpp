@@ -6,6 +6,8 @@
 #include <fstream>
 #include <iomanip>
 #include <list>
+#include <algorithm>
+
 #include "Goat.h"
 using namespace std;
 
@@ -16,6 +18,9 @@ void delete_goat(list<Goat> &trip);
 void add_goat(list<Goat> &trip, string [], string []);
 void display_trip(list<Goat> trip);
 int main_menu();
+
+//Algorithm functions
+void displayGoatsAlg(list<Goat> trip);
 
 int main() {
     srand(time(0));
@@ -48,7 +53,7 @@ int main() {
     
     // Goat Manager 3001 Engine
     int sel = main_menu();
-    while (sel != 4) {
+    while (sel != 5) {
         switch (sel) {
             case 1:
                 cout << "Adding a goat.\n";
@@ -62,6 +67,9 @@ int main() {
                 cout << "Displaying goat data.\n";
                 display_trip(trip);
                 break;
+            case 4:    
+                displayGoatsAlg(trip);
+                break;
             default:
                 cout << "Invalid selection.\n";
                 break;
@@ -74,15 +82,16 @@ int main() {
 }
 
 int main_menu() {
-    cout << "*** GOAT MANAGER 3001 ***\n";
+    cout << "\n*** GOAT MANAGER 3001 ***\n";
     cout << "[1] Add a goat\n";
     cout << "[2] Delete a goat\n";
     cout << "[3] List goats\n";
-    cout << "[4] Quit\n";
+    cout << "[4] Alg. Display Goats\n";
+    cout << "[] Quit\n";
     cout << "Choice --> ";
     int choice;
     cin >> choice;
-    while (choice < 1 || choice > 4) {
+    while (choice < 1 || choice > 5) {
         cout << "Invalid, again --> ";
         cin >> choice;
     }
@@ -130,3 +139,14 @@ int select_goat(list<Goat> trp) {
     }
     return input;
 }
+
+//Algorithm functions
+void displayGoatsAlg(list<Goat> trip){
+    cout << "\nUsing for_each to display goats:\n";
+
+    for_each(trip.begin(), trip.end(), [](Goat gt){
+        cout << gt.get_name() << " (" << gt.get_age()
+             << ", " << gt.get_color() << ")\n"; 
+    });
+}
+
