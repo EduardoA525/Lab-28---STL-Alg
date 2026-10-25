@@ -21,6 +21,7 @@ int main_menu();
 
 //Algorithm functions
 void displayGoatsAlg(list<Goat> trip);
+void findGoatAlg(list<Goat> trip);
 
 int main() {
     srand(time(0));
@@ -53,7 +54,7 @@ int main() {
     
     // Goat Manager 3001 Engine
     int sel = main_menu();
-    while (sel != 5) {
+    while (sel != 6) {
         switch (sel) {
             case 1:
                 cout << "Adding a goat.\n";
@@ -69,6 +70,9 @@ int main() {
                 break;
             case 4:    
                 displayGoatsAlg(trip);
+                break;
+            case 5:    
+                findGoatAlg(trip);
                 break;
             default:
                 cout << "Invalid selection.\n";
@@ -87,11 +91,12 @@ int main_menu() {
     cout << "[2] Delete a goat\n";
     cout << "[3] List goats\n";
     cout << "[4] Alg. Display Goats\n";
+    cout << "[5] Alg. Find Goat\n";
     cout << "[] Quit\n";
     cout << "Choice --> ";
     int choice;
     cin >> choice;
-    while (choice < 1 || choice > 5) {
+    while (choice < 1 || choice > 6) {
         cout << "Invalid, again --> ";
         cin >> choice;
     }
@@ -148,5 +153,25 @@ void displayGoatsAlg(list<Goat> trip){
         cout << gt.get_name() << " (" << gt.get_age()
              << ", " << gt.get_color() << ")\n"; 
     });
+}
+
+void findGoatAlg(list<Goat> trip){
+    string searched;
+
+    cout << "\nName of goat to search: ";
+    cin >> searched;
+
+    auto it = find_if(trip.begin(), trip.end(), [searched](const Goat &gt) {
+                        return gt.get_name() == searched;
+    });
+
+    if (it != trip.end()) {
+        cout << "Here is your goat: " << it->get_name()
+             << " (" << it-> get_age() << ", "
+             << it->get_color() << ")\n";
+    }
+    else {
+        cout << "\nGoat does not exist.\n";
+    }
 }
 
