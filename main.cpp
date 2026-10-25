@@ -27,6 +27,7 @@ void countGoatAlg(list<Goat> trip);
 void totalAgeAlg(list<Goat> trip);
 void boolAgeCheckAlg(list<Goat> trip);
 void reverseGoatAlg(list<Goat> &trip);
+void removeAgeCheckAlg(list<Goat> &trip);
 
 int main() {
     srand(time(0));
@@ -59,7 +60,7 @@ int main() {
     
     // Goat Manager 3001 Engine
     int sel = main_menu();
-    while (sel != 10) {
+    while (sel != 11) {
         switch (sel) {
             case 1:
                 cout << "Adding a goat.\n";
@@ -91,6 +92,9 @@ int main() {
             case 9:    
                 reverseGoatAlg(trip);
                 break;
+            case 10:    
+                removeAgeCheckAlg(trip);
+                break;
             default:
                 cout << "Invalid selection.\n";
                 break;
@@ -113,11 +117,12 @@ int main_menu() {
     cout << "[7] Alg. Accumulate Ages\n";
     cout << "[8] Alg. Bool Age Checker\n";
     cout << "[9] Alg. Reverse Goat List\n";
+    cout << "[10] Alg. Older Age Remover\n";
     cout << "[] Quit\n";
     cout << "Choice --> ";
     int choice;
     cin >> choice;
-    while (choice < 1 || choice > 10) {
+    while (choice < 1 || choice > 11) {
         cout << "Invalid, again --> ";
         cin >> choice;
     }
@@ -244,3 +249,31 @@ void reverseGoatAlg(list<Goat> &trip){
     display_trip(trip);
 }
 
+void removeAgeCheckAlg(list<Goat> &trip){
+    int age;
+    int newSize;
+
+    cout << "\nMinimum age to remove goats: ";
+    cin >> age;
+
+    size_t prevSize = trip.size();
+
+    trip.remove_if([age](const Goat &gt){
+        return gt.get_age() > age;
+    });
+
+    newSize = prevSize - trip.size();
+    
+    cout << "Removed " << newSize;
+    if (newSize == 1){
+        cout << " goat older than " << age << " years old." << endl;
+    }
+    else cout << " goats older than " << age << " years old." << endl;
+
+    cout << "There ";
+
+    if (trip.size() == 1) {
+        cout <<  "is " << trip.size() << " goat left." << endl;
+    }
+    else cout << "are " << trip.size() << " goats left." << endl;
+}
