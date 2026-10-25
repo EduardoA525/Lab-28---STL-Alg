@@ -26,6 +26,7 @@ void findGoatAlg(list<Goat> trip);
 void countGoatAlg(list<Goat> trip);
 void totalAgeAlg(list<Goat> trip);
 void boolAgeCheckAlg(list<Goat> trip);
+void reverseGoatAlg(list<Goat> &trip);
 
 int main() {
     srand(time(0));
@@ -58,7 +59,7 @@ int main() {
     
     // Goat Manager 3001 Engine
     int sel = main_menu();
-    while (sel != 9) {
+    while (sel != 10) {
         switch (sel) {
             case 1:
                 cout << "Adding a goat.\n";
@@ -87,6 +88,9 @@ int main() {
             case 8:    
                 boolAgeCheckAlg(trip);
                 break;
+            case 9:    
+                reverseGoatAlg(trip);
+                break;
             default:
                 cout << "Invalid selection.\n";
                 break;
@@ -108,11 +112,12 @@ int main_menu() {
     cout << "[6] Alg. Count Goat\n";
     cout << "[7] Alg. Accumulate Ages\n";
     cout << "[8] Alg. Bool Age Checker\n";
+    cout << "[9] Alg. Reverse Goat List\n";
     cout << "[] Quit\n";
     cout << "Choice --> ";
     int choice;
     cin >> choice;
-    while (choice < 1 || choice > 9) {
+    while (choice < 1 || choice > 10) {
         cout << "Invalid, again --> ";
         cin >> choice;
     }
@@ -231,3 +236,11 @@ void boolAgeCheckAlg(list<Goat> trip){
         cout << "\nNO! No goats are at least " << MIN_AGE << " years old.\n";
     }
 }
+
+void reverseGoatAlg(list<Goat> &trip){
+    reverse(trip.begin(), trip.end());
+
+    cout << "\nGoats have been reversed. Reversed Order:\n";
+    display_trip(trip);
+}
+
